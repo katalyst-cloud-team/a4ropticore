@@ -2,40 +2,16 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-
-const staticPath = path.join(__dirname, 'build');
-app.use(express.static(staticPath, {
-  index: false,
-}));
-
-const spaRoutes = [
-  '/',
-  '/search',
-  '/about',
-  '/report',
-  '/help',
-  '/storagesearch',
-  '/events/:uuid',
-  '/storage/:ip',
-];
-
-spaRoutes.forEach(route => {
-  app.get(route, (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'));
-  });
-});
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get(/.*/, (req, res) => {
-  const url = req.url;
-d
-  if (/\.\w{2,5}$/.test(url)) {
-    res.status(404).send('File not found');
-  } else {
-    res.sendFile(path.join(staticPath, 'index.html'));
+  if (/\.\w{2,5}(\?.*)?$/.test(req.url)) {
+    return res.status(404).end();
   }
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`✅ Server listening on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
