@@ -2,8 +2,7 @@ name: Build and deploy React SPA to Azure Web App - opticore
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -31,6 +30,7 @@ jobs:
             build
             server.js
             package.json
+            package-lock.json   
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,5 +47,5 @@ jobs:
         with:
           app-name: 'opticore'
           slot-name: 'Production'
-          package: .  # Deploy the whole folder (build/, server.js, package.json)
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EF48D1EBAB2947DD97734402635F97C4 }}
