@@ -17,11 +17,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+ 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
+ 
+      - name: Install dependencies
+        run: npm install
+ 
+      - name: Build React app
+        run: CI=false npm run build  
+ 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: build
 
       - name: npm install, build, and test
         run: |
@@ -52,4 +64,5 @@ jobs:
           app-name: 'opticore'
           slot-name: 'Production'
           package: .
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EF48D1EBAB2947DD97734402635F97C4 }}
