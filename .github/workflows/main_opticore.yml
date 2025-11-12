@@ -30,7 +30,8 @@ jobs:
             build
             server.js
             package.json
-            package-lock.json   
+            package-lock.json 
+            node_modules
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,3 +50,4 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EF48D1EBAB2947DD97734402635F97C4 }}
+
