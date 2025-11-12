@@ -31,7 +31,6 @@ d
   if (/\.\w{2,5}$/.test(url)) {
     res.status(404).send('File not found');
   } else {
-    // It's a SPA route → serve index.html
     res.sendFile(path.join(staticPath, 'index.html'));
   }
 });
